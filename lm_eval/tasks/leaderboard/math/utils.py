@@ -75,7 +75,6 @@ def process_results(doc: dict, results: List[str]) -> Dict[str, int]:
 
     if answer == INVALID_ANSWER:
         return {"exact_match": 0}
-
     if answer.strip() == doc["answer"].strip() or is_equiv(answer, doc["answer"]):
         retval = 1
     else:

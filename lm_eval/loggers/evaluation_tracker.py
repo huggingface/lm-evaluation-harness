@@ -235,9 +235,9 @@ class EvaluationTracker:
 
                 if self.api and self.push_results_to_hub:
                     repo_id = (
-                        self.results_repo
+                        "open-llm-leaderboard/results"
                         if self.public_repo
-                        else self.results_repo_private
+                        else "open-llm-leaderboard/private-results"
                     )
                     self.api.create_repo(
                         repo_id=repo_id,
