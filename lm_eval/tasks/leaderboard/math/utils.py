@@ -23,7 +23,13 @@ INVALID_ANSWER = "[invalidanswer]"
 # taken from
 # https://github.com/wellecks/lm-evaluation-harness/blob/master/lm_eval/tasks/minerva_math.py
 def doc_to_text(doc: dict) -> str:
-    return "Problem:" + "\n" + doc["problem"] + "\n\n" + "Solution:"
+    return (
+        "Problem:\n"
+        + doc["problem"]
+        + "\nPlease provide your solution in the following format 'Final Answer: ###[final answer]'."
+        + "\n\nSolution:\n"
+    )
+
 
 
 def process_docs(dataset: datasets.Dataset) -> datasets.Dataset:
@@ -46,22 +52,51 @@ def list_fewshot_samples() -> list[dict]:
     return [
         {
             "problem": "Find the domain of the expression  $\\frac{\\sqrt{x-2}}{\\sqrt{5-x}}$.}",
-            "solution": "The expressions inside each square root must be non-negative. Therefore, $x-2 \\ge 0$, so $x\\ge2$, and $5 - x \\ge 0$, so $x \\le 5$. Also, the denominator cannot be equal to zero, so $5-x>0$, which gives $x<5$. Therefore, the domain of the expression is $\\boxed{[2,5)}$.\nFinal Answer: The final answer is $[2,5)$. I hope it is correct.",
+            "solution": (
+                "The expressions inside each square root must be non-negative. Therefore, $x - 2 \\geq 0$, so $x \\geq 2$, "
+                "and $5 - x \\geq 0$, so $x \\leq 5$. Also, the denominator cannot be zero, so $5 - x > 0$, which gives $x < 5$. "
+                "Therefore, the domain of the expression is $[2, 5)$.\n\n"
+                "Final Answer: ###$[2, 5)$"
+            ),
             "few_shot": "1",
         },
         {
             "problem": "If $\\det \\mathbf{A} = 2$ and $\\det \\mathbf{B} = 12,$ then find $\\det (\\mathbf{A} \\mathbf{B}).$",
-            "solution": "We have that $\\det (\\mathbf{A} \\mathbf{B}) = (\\det \\mathbf{A})(\\det \\mathbf{B}) = (2)(12) = \\boxed{24}.$\nFinal Answer: The final answer is $24$. I hope it is correct.",
+            "solution": (
+                "We have that $\\det(\\mathbf{A} \\mathbf{B}) = \\det(\\mathbf{A}) \\cdot \\det(\\mathbf{B}) = 2 \\times 12 = 24$.\n\n"
+                "Final Answer: ###$24$"
+            ),
             "few_shot": "1",
         },
         {
-            "problem": "Terrell usually lifts two 20-pound weights 12 times. If he uses two 15-pound weights instead, how many times must Terrell lift them in order to lift the same total weight?",
-            "solution": "If Terrell lifts two 20-pound weights 12 times, he lifts a total of $2\\cdot 12\\cdot20=480$ pounds of weight.  If he lifts two 15-pound weights instead for $n$ times, he will lift a total of $2\\cdot15\\cdot n=30n$ pounds of weight.  Equating this to 480 pounds, we can solve for $n$:\n\\begin{align*}\n30n&=480\\\n\\Rightarrow\\qquad n&=480/30=\\boxed{16}\n\\end{align*}\nFinal Answer: The final answer is $16$. I hope it is correct.",
+            "problem": (
+                "Terrell usually lifts two 20-pound weights 12 times. If he uses two 15-pound weights instead, "
+                "how many times must Terrell lift them in order to lift the same total weight?"
+            ),
+            "solution": (
+                "Terrell lifts two 20-pound weights 12 times, lifting a total weight of $2 \\times 20 \\times 12 = 480$ pounds. "
+                "Using two 15-pound weights, each lift is $2 \\times 15 = 30$ pounds. Let $n$ be the number of lifts needed: "
+                "$30n = 480$, so $n = 16$.\n\n"
+                "Final Answer: ###$16$"
+            ),
             "few_shot": "1",
         },
         {
-            "problem": "If the system of equations\n\n\\begin{align*}\n6x-4y&=a,\\\n6y-9x &=b.\n\\end{align*}has a solution $(x, y)$ where $x$ and $y$ are both nonzero,\nfind $\\frac{a}{b},$ assuming $b$ is nonzero.",
-            "solution": "If we multiply the first equation by $-\\frac{3}{2}$, we obtain\n\n$$6y-9x=-\\frac{3}{2}a.$$Since we also know that $6y-9x=b$, we have\n\n$$-\\frac{3}{2}a=b\\Rightarrow\\frac{a}{b}=\\boxed{-\\frac{2}{3}}.$$\nFinal Answer: The final answer is $-\\frac{2}{3}$. I hope it is correct.",
+            "problem": (
+                "If the system of equations\n\n"
+                "\\begin{align*}\n"
+                "6x - 4y &= a, \\\\\n"
+                "6y - 9x &= b.\n"
+                "\\end{align*}\n"
+                "has a solution $(x, y)$ where $x$ and $y$ are both nonzero,\n"
+                "find $\\frac{a}{b},$ assuming $b$ is nonzero."
+            ),
+            "solution": (
+                "Multiply the first equation by $\\frac{3}{2}$: $9x - 6y = \\frac{3}{2}a$. "
+                "Adding this to the second equation $6y - 9x = b$ gives $0 = \\frac{3}{2}a + b$, "
+                "so $\\frac{a}{b} = -\\frac{2}{3}$.\n\n"
+                "Final Answer: ###$-\\frac{2}{3}$"
+            ),
             "few_shot": "1",
         },
     ]
@@ -193,17 +228,48 @@ def is_equiv(x1: str, x2: str) -> bool:
 
 
 def get_unnormalized_answer(text: str) -> str:
-    end_seq = "I hope it is correct."
-    text += end_seq
+    INVALID_ANSWER = "[invalidanswer]"
+    # Ensure that the text ends with a newline to capture answers at the end of the string
+    text += "\n"
     match = re.search(
-        r"Final Answer: The final answer is(.*?). I hope it is correct.",
-        text,
+        r"Final Answer : ###(.*?)(?:\n|$)",
+        text
     )
-    if match:
-        return match.group(1).strip()
+    match_v1 = re.search(
+        r"Final Answer :###(.*?)(?:\n|$)",
+        text
+    )
+    match_v2 = re.search(
+        r"Final Answer:###(.*?)(?:\n|$)",
+        text
+    )
+    match_v3 = re.search(
+        r"###(.*?)(?:\n|$)",
+        text
+    )
+    match_v4 = re.search(
+        r"Final Answer: (.*?)(?:\n|$)",
+        text
+    )
+    if match or match_v1 or match_v2 or match_v3 or match_v4:
+        try:
+            return match.group(1).strip()
+        except:
+            try:
+                return match_v1.group(1).strip()
+            except:
+                try:
+                    return match_v2.group(1).strip()
+                except:
+                    try:
+                        return match_v3.group(1).strip()
+                    except:
+                        try:
+                            return match_v4.group(1).strip()
+                        except:
+                            return INVALID_ANSWER
     else:
         return INVALID_ANSWER
-
 
 SUBSTITUTIONS = [
     ("an ", ""),
