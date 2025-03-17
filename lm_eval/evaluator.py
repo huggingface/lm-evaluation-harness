@@ -408,9 +408,9 @@ def evaluate(
             raise ValueError("log_samples must be True for 'bypass' metric-only tasks")
     for task_output in eval_tasks:
         task: Task = task_output.task
-        limit = get_sample_size(task, limit)
+        _limit = get_sample_size(task, limit)
         task.build_all_requests(
-            limit=limit,
+            limit=_limit,
             rank=lm.rank,
             world_size=lm.world_size,
             cache_requests=cache_requests,
