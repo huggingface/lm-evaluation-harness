@@ -413,7 +413,7 @@ def evaluate(
         limit = get_sample_size(task, limit_arg)
         limits.append(limit)
         task.build_all_requests(
-            limit=_limit,
+            limit=limit,
             rank=lm.rank,
             world_size=lm.world_size,
             cache_requests=cache_requests,
