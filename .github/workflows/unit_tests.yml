@@ -21,9 +21,9 @@ jobs:
 
     steps:
     - name: Checkout Code
-      uses: actions/checkout@v4
+      uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd  # v6.0.2
     - name: Set up Python 3.8
-      uses: actions/setup-python@v5
+      uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065  # v5
       with:
         python-version: 3.8
         cache: pip
@@ -32,7 +32,7 @@ jobs:
       env:
         SKIP: "no-commit-to-branch,mypy"
 
-      uses: pre-commit/action@v3.0.1
+      uses: pre-commit/action@2c7b3805fd2a0fd8c1884dcaebf91fc102a13ecd  # v3.0.1
 #       # mypy turned off for now
 #    - name: Lint with mypy
 #      run: mypy . --ignore-missing-imports --check-untyped-defs --explicit-package-bases --warn-unreachable
@@ -46,9 +46,9 @@ jobs:
     timeout-minutes: 30
     steps:
     - name: Checkout Code
-      uses: actions/checkout@v4
+      uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd  # v6.0.2
     - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v5
+      uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065  # v5
       with:
         python-version: ${{ matrix.python-version }}
         cache: pip
@@ -63,7 +63,7 @@ jobs:
     - name: Test with pytest
       run: python -m pytest --showlocals -s -vv -n=auto --ignore=tests/models/test_neuralmagic.py --ignore=tests/models/test_openvino.py
     - name: Archive artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@ff15f0306b3f739f7b6fd43fb5d26cd321bd4de5  # v3
       with:
         name: output_results
         path: |
@@ -74,9 +74,9 @@ jobs:
     timeout-minutes: 30
     steps:
     - name: Checkout Code
-      uses: actions/checkout@v4
+      uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd  # v6.0.2
     - name: Set up Python 3.11
-      uses: actions/setup-python@v5
+      uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065  # v5
       with:
         python-version: 3.11
         cache: pip
@@ -88,7 +88,7 @@ jobs:
     - name: Test with pytest
       run: python -m pytest tests/models --showlocals -s -vv
     - name: Archive artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@ff15f0306b3f739f7b6fd43fb5d26cd321bd4de5  # v3
       with:
         name: output_results
         path: |
