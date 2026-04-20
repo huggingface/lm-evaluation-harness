@@ -33,7 +33,6 @@ def test_instruction_following_strict(
     for index, instruction_id in enumerate(instruction_list):
         instruction_cls = instructions_registry.INSTRUCTION_DICT[instruction_id]
         instruction = instruction_cls(instruction_id)
-
         # Remove None values from kwargs to avoid unexpected keyword argument errors in build_description method.
         kwargs = {k: v for k, v in inp.kwargs[index].items() if v}
         instruction.build_description(**kwargs)

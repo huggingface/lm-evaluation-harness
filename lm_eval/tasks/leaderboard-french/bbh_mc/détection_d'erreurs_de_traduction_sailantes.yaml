@@ -1,0 +1,72 @@
+dataset_name: détection_d'erreurs_de_traduction_sailantes
+description: >
+  Détectez le type d'erreur dans une traduction anglaise d'une phrase source allemande.
+doc_to_choice: ["(A)", "(B)", "(C)", "(D)", "(E)", "(F)"]
+fewshot_config:
+  sampler: first_n
+  samples:
+    - input: |
+        Les traductions suivantes de l'allemand à l'anglais contiennent une erreur particulière. 
+        Cette erreur sera l'un des types suivants : 
+        Entités Nommées : Une entité (noms, lieux, localisations, etc.) est changée pour une autre entité.
+        Valeurs Numériques : Les valeurs numériques (ordinaux ou cardinaux), les dates et/ou les unités sont modifiées.
+        Modificateurs ou Adjectifs : Les modificateurs et adjectifs associés à un nom sont changés.
+        Négation ou Antonymes : Une négation est introduite ou retirée, ou des comparatifs sont changés en leurs antonymes.
+        Faits : Des erreurs factuelles triviales, non liées aux catégories ci-dessus, sont introduites dans les traductions.
+        Contenu Supprimé : Une clause significative est supprimée dans la traduction.
+        Veuillez identifier cette erreur.
+        Source: In der Liste der Baudenkmale in Lenzen (Elbe) sind alle Baudenkmale der brandenburgischen Stadt Lenzen (Elbe) und ihrer Ortsteile aufgelistet.
+
+        Traduction: Dans la liste des monuments architecturaux de Lenzen, tous les monuments architecturaux de la ville de Brandebourg de Lenzen et de ses districts sont répertoriés.
+
+        La traduction contient une erreur concernant
+
+        Options :
+
+        (A) Modificateurs ou Adjectifs
+
+        (B) Valeurs Numériques
+
+        (C) Négation ou Antonymes
+
+        (D) Entités Nommées
+
+        (E) Contenu Supprimé
+
+        (F) Faits
+      target: (D)
+    - input: |
+        Les traductions suivantes de l'allemand à l'anglais contiennent une erreur particulière. 
+        Cette erreur sera l'un des types suivants : 
+        Entités Nommées : Une entité (noms, lieux, localisations, etc.) est changée pour une autre entité.
+        Valeurs Numériques : Les valeurs numériques (ordinaux ou cardinaux), les dates et/ou les unités sont modifiées.
+        Modificateurs ou Adjectifs : Les modificateurs et adjectifs associés à un nom sont changés.
+        Négation ou Antonymes : Une négation est introduite ou retirée, ou des comparatifs sont changés en leurs antonymes.
+        Faits : Des erreurs factuelles triviales, non liées aux catégories ci-dessus, sont introduites dans les traductions.
+        Contenu Supprimé : Une clause significative est supprimée dans la traduction.
+        Veuillez identifier cette erreur.
+        Source: Auf dieser Seite sind die Baudenkmäler der oberbayerischen Großen Kreisstadt Landsberg am Lech zusammengestellt.
+
+        Traduction: Sur cette page, les monuments architecturaux de la ville de Landsberg am Lech sont compilés.
+
+        La traduction contient une erreur concernant
+
+        Options :
+
+        (A) Modificateurs ou Adjectifs
+
+        (B) Valeurs Numériques
+
+        (C) Négation ou Antonymes
+
+        (D) Entités Nommées
+
+        (E) Contenu Supprimé
+
+        (F) Faits
+      target: (E)
+    - input: |
+        Les traductions suivantes de l'allemand à l'anglais contiennent une erreur particulière. 
+        Cette erreur sera l'un des types suivants : 
+        Entités Nommées : Une entité (noms, lieux, localisations, etc.) est changée pour une autre entité.
+        Valeurs Numériques : Les valeurs numériques (ordinaux ou cardinaux

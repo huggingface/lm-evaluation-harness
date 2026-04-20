@@ -1,0 +1,52 @@
+dataset_name: déduction_logique_trois_objets
+description: >
+  Une tâche de déduction logique qui nécessite de déduire l'ordre d'une séquence d'objets.
+doc_to_choice: ["(A)", "(B)", "(C)"]
+fewshot_config:
+  sampler: first_n
+  samples:
+    - input: |
+        Les paragraphes suivants décrivent chacun un ensemble de trois objets disposés
+        dans un ordre fixe. Les déclarations sont logiquement cohérentes dans chaque paragraphe.
+        Dans un tournoi de golf, il y avait trois golfeurs : Amy, Eli et Eve. Eve a terminé
+        devant Amy. Eli a terminé derrière Amy.
+
+        Options :
+
+        (A) Amy a terminé dernière
+
+        (B) Eli a terminé dernier
+
+        (C) Eve a terminé dernière
+      target: (B)
+    - input: |
+        Les paragraphes suivants décrivent chacun un ensemble de trois objets disposés
+        dans un ordre fixe. Les déclarations sont logiquement cohérentes dans chaque paragraphe.
+        Sur une étagère, il y a trois livres : un livre blanc, un livre vert et un livre
+        orange. Le livre vert est à droite du livre blanc. Le livre orange est tout à droite.
+
+        Options :
+
+        (A) Le livre blanc est tout à gauche
+
+        (B) Le livre vert est tout à gauche
+
+        (C) Le livre orange est tout à gauche
+      target: (A)
+    - input: |
+        Les paragraphes suivants décrivent chacun un ensemble de trois objets disposés
+        dans un ordre fixe. Les déclarations sont logiquement cohérentes dans chaque paragraphe.
+        Sur une étagère, il y a trois livres : un livre rouge, un livre gris et un livre blanc.
+        Le livre blanc est à gauche du livre gris. Le livre rouge est le deuxième en partant
+        de la gauche.
+
+        Options :
+
+        (A) Le livre rouge est tout à gauche
+
+        (B) Le livre gris est tout à gauche
+
+        (C) Le livre blanc est tout à gauche
+      target: (C)
+include: _fewshot_template_yaml
+task: leaderboard_bbh_déduction_logique_trois_objets

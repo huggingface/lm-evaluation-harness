@@ -1,0 +1,41 @@
+dataset_name: naviguer
+description: >
+  Étant donné une série d'instructions de navigation, déterminez si l'on revient au point de départ.
+doc_to_choice: ["Oui", "Non"]
+fewshot_config:
+  sampler: first_n
+  samples:
+    - input: |
+        Si vous suivez ces instructions, revenez-vous au point de départ ?
+        Tournez à gauche. Faites demi-tour. Tournez à gauche. Faites 7 pas. Faites 2 pas. Faites 4 pas.
+        Faites 8 pas.
+
+        Options :
+
+        - Oui
+
+        - Non
+      target: 'Non'
+    - input: |
+        Si vous suivez ces instructions, revenez-vous au point de départ ?
+        Faites demi-tour. Faites 1 pas. Faites 6 pas. Faites demi-tour. Faites 6 pas. Faites 9 pas.
+        Faites 1 pas.
+
+        Options :
+
+        - Oui
+
+        - Non
+      target: 'Non'
+    - input: |
+        Si vous suivez ces instructions, revenez-vous au point de départ ?
+        Faites toujours face vers l'avant. Faites 2 pas à droite. Faites 9 pas à gauche. Faites 7 pas à droite.
+
+        Options :
+
+        - Oui
+
+        - Non
+      target: 'Oui'
+include: _fewshot_template_yaml
+task: leaderboard_bbh_naviguer

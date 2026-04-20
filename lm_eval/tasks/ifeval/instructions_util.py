@@ -1667,7 +1667,7 @@ def count_words(text):
 
 @functools.lru_cache(maxsize=None)
 def _get_sentence_tokenizer():
-    return nltk.data.load("nltk:tokenizers/punkt/english.pickle")
+    return nltk.data.load("nltk:tokenizers/punkt/french.pickle")
 
 
 def count_sentences(text):

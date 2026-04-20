@@ -1,0 +1,85 @@
+dataset_name: pingouins_sur_une_table
+description: >
+  Répondez aux questions sur une table de pingouins et leurs attributs.
+doc_to_choice: ["(A)", "(B)", "(C)", "(D)", "(E)"]
+fewshot_config:
+  sampler: first_n
+  samples:
+    - input: |
+        Voici une table où la première ligne est un en-tête et chaque ligne suivante
+        représente un pingouin : nom, âge, taille (cm), poids (kg)
+
+        Louis, 7, 50, 11
+        Bernard, 5, 80, 13
+        Vincent, 9, 60, 11
+        Gwen, 8, 70, 15
+
+        Par exemple : l'âge de Louis est 7 ans, le poids de Gwen est de 15 kg, la taille de Bernard est de 80 cm. 
+        Nous ajoutons maintenant un pingouin à la table :
+
+        James, 12, 90, 12
+
+        Combien de pingouins ont moins de 8 ans ?
+
+        Options :
+
+        (A) 1
+
+        (B) 2
+
+        (C) 3
+
+        (D) 4
+
+        (E) 5
+      target: (B)
+    - input: |
+        Voici une table où la première ligne est un en-tête et chaque ligne suivante
+        représente un pingouin : nom, âge, taille (cm), poids (kg)
+
+        Louis, 7, 50, 11
+        Bernard, 5, 80, 13
+        Vincent, 9, 60, 11
+        Gwen, 8, 70, 15
+
+        Par exemple : l'âge de Louis est de 7 ans, le poids de Gwen est de 15 kg, la taille de Bernard est de 80 cm. 
+        Quel est le pingouin le plus jeune ?
+
+        Options :
+
+        (A) Louis
+
+        (B) Bernard
+
+        (C) Vincent
+
+        (D) Gwen
+
+        (E) James
+      target: (B)
+    - input: |
+        Voici une table où la première ligne est un en-tête et chaque ligne suivante
+        représente un pingouin : nom, âge, taille (cm), poids (kg)
+
+        Louis, 7, 50, 11
+        Bernard, 5, 80, 13
+        Vincent, 9, 60, 11
+        Gwen, 8, 70, 15
+
+        Par exemple : l'âge de Louis est de 7 ans, le poids de Gwen est de 15 kg, la taille de Bernard est de 80 cm. 
+        Quel est le nom du deuxième pingouin trié par ordre alphabétique ?
+
+        Options :
+
+        (A) Louis
+
+        (B) Bernard
+
+        (C) Vincent
+
+        (D) Gwen
+
+        (E) James
+      target: (D)
+include: _fewshot_template_yaml
+task: leaderboard_bbh_pingouins_sur_une_table

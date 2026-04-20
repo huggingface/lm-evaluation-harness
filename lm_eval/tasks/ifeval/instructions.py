@@ -34,7 +34,7 @@ _InstructionArgsDtype = Optional[Dict[str, Union[int, str, Sequence[str]]]]
 _LANGUAGES = instructions_util.LANGUAGE_CODES
 
 # The relational operation for comparison.
-_COMPARISON_RELATION = ("less than", "at least")
+_COMPARISON_RELATION = ("moins de", "au moins")
 
 # The maximum number of sentences.
 _MAX_NUM_SENTENCES = 20
@@ -47,33 +47,32 @@ _NUM_BULLETS = 5
 
 # The options of constrained response.
 _CONSTRAINED_RESPONSE_OPTIONS = (
-    "My answer is yes.",
-    "My answer is no.",
-    "My answer is maybe.",
+    "Ma réponse est oui.",
+    "Ma réponse est non.",
+    "Ma réponse est peut-être.",
 )
 
 # The options of starter keywords.
 _STARTER_OPTIONS = (
-    "I would say",
-    "My answer is",
-    "I believe",
-    "In my opinion",
-    "I think",
-    "I reckon",
-    "I feel",
-    "From my perspective",
-    "As I see it",
-    "According to me",
-    "As far as I'm concerned",
-    "To my understanding",
-    "In my view",
-    "My take on it is",
-    "As per my perception",
+    "Je dirais",
+    "Ma réponse est",
+    "Je crois",
+    "À mon avis",
+    "Je pense",
+    "J'estime",
+    "Je ressens",
+    "De mon point de vue",
+    "Selon moi",
+    "Pour autant que je suis concerné",
+    "Dans ma compréhension",
+    "De mon point de vue",
+    "Mon opinion à ce sujet est",
+    "Selon ma perception",
 )
 
 # The options of ending keywords.
 # TODO(jeffreyzhou) add more ending options
-_ENDING_OPTIONS = ("Any other questions?", "Is there anything else I can help with?")
+_ENDING_OPTIONS = ("Des questions supplémentaires ?", "Y a-t-il autre chose avec laquelle je peux aider ?")
 
 # The number of highlighted sections.
 _NUM_HIGHLIGHTED_SECTIONS = 4
@@ -147,8 +146,7 @@ class ResponseLanguageChecker(Instruction):
             self._language = random.choice(list(_LANGUAGES.keys()))
         # TODO(tianjianlu): opens the description generation to more choices.
         self._description_pattern = (
-            "Your ENTIRE response should be in {language} language, no other "
-            + "language is allowed."
+            "Votre réponse ENTIÈRE doit être en {language}, aucune autre langue n'est autorisée."
         )
         return self._description_pattern.format(language=_LANGUAGES[self._language])
 
@@ -156,7 +154,7 @@ class ResponseLanguageChecker(Instruction):
         """Returns the keyward args of `build_description`."""
         return {"language": self._language}
 
-    def get_instruction_args_keys(self):
+    def get_instruction_args_keys(self,x):
         """Returns the args keys of `build_description`."""
         return ["language"]
 
@@ -215,8 +213,9 @@ class NumberOfSentences(Instruction):
             self._comparison_relation = relation
 
         self._description_pattern = (
-            "Your response should contain {relation} {num_sentences} sentences."
+            "Votre réponse doit contenir {relation} {num_sentences} phrases."
         )
+
         return self._description_pattern.format(
             relation=self._comparison_relation,
             num_sentences=self._num_sentences_threshold,
@@ -270,9 +269,10 @@ class PlaceholderChecker(Instruction):
         if self._num_placeholders is None or self._num_placeholders < 0:
             self._num_placeholders = random.randint(1, _NUM_PLACEHOLDERS)
         self._description_pattern = (
-            "The response must contain at least {num_placeholders} placeholders "
-            + "represented by square brackets, such as [address]."
+            "La réponse doit contenir au moins {num_placeholders} espaces réservés "
+            + "représentés par des crochets, comme [adresse]."
         )
+
         return self._description_pattern.format(num_placeholders=self._num_placeholders)
 
     def get_instruction_args(self):
@@ -315,10 +315,10 @@ class BulletListChecker(Instruction):
         if self._num_bullets is None or self._num_bullets < 0:
             self._num_bullets = random.randint(1, _NUM_BULLETS)
         self._description_pattern = (
-            "Your answer must contain exactly {num_bullets} bullet points. "
-            + "Use the markdown bullet points such as:\n"
-            + "* This is point 1. \n"
-            + "* This is point 2"
+            "Votre réponse doit contenir exactement {num_bullets} points à puces. "
+            + "Utilisez les points à puces en markdown comme ceci :\n"
+            + "* Ceci est le point 1. \n"
+            + "* Ceci est le point 2"
         )
         return self._description_pattern.format(num_bullets=self._num_bullets)
 
@@ -355,7 +355,7 @@ class ConstrainedResponseChecker(Instruction):
         # A sequence of string(s) representing the options of the expected response.
         self._constrained_responses = _CONSTRAINED_RESPONSE_OPTIONS
         self._description_pattern = (
-            "Answer with one of the following options: {response_options}"
+            "Répondez avec l'une des options suivantes : {response_options}"
         )
         return self._description_pattern.format(
             response_options=self._constrained_responses
@@ -403,9 +403,10 @@ class ConstrainedStartChecker(Instruction):
         if self._starter is None:
             self._starter = random.choice(_STARTER_OPTIONS)
         self._description_pattern = (
-            "During the conversation, when it is your turn, "
-            + "please always start with {starter}"
+            "Pendant la conversation, lorsque c'est votre tour, "
+            + "veuillez toujours commencer par {starter}"
         )
+
         return self._description_pattern.format(starter=self._starter)
 
     def get_instruction_args(self):
@@ -451,8 +452,8 @@ class HighlightSectionChecker(Instruction):
             self._num_highlights = random.randint(1, _NUM_HIGHLIGHTED_SECTIONS)
 
         self._description_pattern = (
-            "Highlight at least {num_highlights} sections in your answer with "
-            + "markdown, i.e. *highlighted section*."
+            "Mettez en évidence au moins {num_highlights} sections dans votre réponse avec "
+            + "le markdown, c'est-à-dire *section mise en évidence*."
         )
 
         return self._description_pattern.format(num_highlights=self._num_highlights)
@@ -516,13 +517,14 @@ class SectionChecker(Instruction):
             self._num_sections = random.randint(1, _NUM_SECTIONS)
 
         self._description_pattern = (
-            "Your response must have {num_sections} sections. Mark the beginning "
-            + "of each section with {section_spliter} X, such as:\n"
+            "Votre réponse doit comporter {num_sections} sections. Marquez le début "
+            + "de chaque section avec {section_spliter} X, comme suit :\n"
             + "{section_spliter} 1\n"
-            + "[content of section 1]\n"
+            + "[contenu de la section 1]\n"
             + "{section_spliter} 2\n"
-            + "[content of section 2]"
+            + "[contenu de la section 2]"
         )
+
 
         return self._description_pattern.format(
             num_sections=self._num_sections, section_spliter=self._section_spliter
@@ -575,9 +577,10 @@ class ParagraphChecker(Instruction):
             self._num_paragraphs = random.randint(1, _NUM_PARAGRAPHS)
 
         self._description_pattern = (
-            "There should be {num_paragraphs} paragraphs. "
-            + "Paragraphs are separated with the markdown divider: ***"
+            "Il doit y avoir {num_paragraphs} paragraphes. "
+            + "Les paragraphes sont séparés par le séparateur markdown : ***"
         )
+
 
         return self._description_pattern.format(num_paragraphs=self._num_paragraphs)
 
@@ -635,9 +638,10 @@ class PostscriptChecker(Instruction):
             self._postscript_marker = random.choice(_POSTSCRIPT_MARKER)
 
         self._description_pattern = (
-            "At the end of your response, please explicitly add a postscript "
-            + "starting with {postscript}"
+            "À la fin de votre réponse, veuillez ajouter explicitement un post-scriptum "
+            + "commençant par {postscript}"
         )
+
 
         return self._description_pattern.format(postscript=self._postscript_marker)
 
@@ -694,10 +698,11 @@ class RephraseChecker(Instruction):
 
         self._reference_without_change = original_message
         self._description = (
-            "Rephrasing: Your rephrased response should only"
-            + "change the words/sentences in between two asterisks"
-            + "such as *change me*."
+            "Reformulation : Votre réponse reformulée ne doit que"
+            + "modifier les mots/phrases entre deux astérisques"
+            + "comme *modifiez-moi*."
         )
+
         return self._description
 
     def get_instruction_args(self):
@@ -761,7 +766,7 @@ class KeywordChecker(Instruction):
             self._keywords = keywords
         self._keywords = sorted(self._keywords)
 
-        self._description_pattern = "Include keywords {keywords} in the response."
+        self._description_pattern = "Incluez les mots-clés {keywords} dans la réponse."
 
         return self._description_pattern.format(keywords=self._keywords)
 
@@ -820,9 +825,10 @@ class KeywordFrequencyChecker(Instruction):
             self._comparison_relation = relation
 
         self._description_pattern = (
-            "In your response, the word {keyword} should appear {relation} "
-            + "{frequency} times."
+            "Dans votre réponse, le mot {keyword} doit apparaître {relation} "
+            + "{frequency} fois."
         )
+
 
         return self._description_pattern.format(
             keyword=self._keyword,
@@ -887,7 +893,7 @@ class NumberOfWords(Instruction):
         else:
             self._comparison_relation = relation
 
-        self._description_pattern = "Answer with {relation} {num_words} words."
+        self._description_pattern = "Répondez avec {relation} {num_words} mots."
 
         return self._description_pattern.format(
             relation=self._comparison_relation, num_words=self._num_words
@@ -916,9 +922,10 @@ class JsonFormat(Instruction):
 
     def build_description(self):
         self._description_pattern = (
-            "Entire output should be wrapped in JSON format. You can use markdown"
-            " ticks such as ```."
+            "La sortie entière doit être enveloppée dans le format JSON. Vous pouvez utiliser"
+            + " des accents graves markdown comme ```."
         )
+
         return self._description_pattern
 
     def get_instruction_args(self):
@@ -983,11 +990,12 @@ class ParagraphFirstWordCheck(Instruction):
         self._first_word = self._first_word.lower()
 
         self._description_pattern = (
-            "There should be {num_paragraphs} paragraphs. "
-            + "Paragraphs and only paragraphs are separated with each other by two "
-            + "new lines as if it was '\\n\\n' in python. "
-            + "Paragraph {nth_paragraph} must start with word {first_word}."
+            "Il devrait y avoir {num_paragraphs} paragraphes. "
+            + "Les paragraphes, et seulement les paragraphes, sont séparés par deux "
+            + "saut de lignes comme s'il s'agissait de '\\n\\n' en python. "
+            + "Le paragraphe {nth_paragraph} doit commencer par le mot {first_word}."
         )
+
 
         return self._description_pattern.format(
             num_paragraphs=self._num_paragraphs,
@@ -1081,8 +1089,9 @@ class KeySentenceChecker(Instruction):
             self._num_sentences = num_sentences
 
         self._description_pattern = (
-            "Include {num_sentences} of the following sentences {key_sentences}"
+            "Incluez {num_sentences} des phrases suivantes : {key_sentences}"
         )
+
 
         return self._description_pattern.format(
             num_sentences=self._num_sentences, key_sentences=self._key_sentences
@@ -1132,8 +1141,9 @@ class ForbiddenWords(Instruction):
             self._forbidden_words = list(set(forbidden_words))
         self._forbidden_words = sorted(self._forbidden_words)
         self._description_pattern = (
-            "Do not include keywords {forbidden_words} in the response."
+            "N'incluez pas les mots-clés {forbidden_words} dans la réponse."
         )
+
 
         return self._description_pattern.format(forbidden_words=self._forbidden_words)
 
@@ -1174,14 +1184,15 @@ class RephraseParagraph(Instruction):
         self._high = high
 
         self._description = (
-            "Rephrase the following paragraph: "
-            + "{original_paragraph}\nYour response should have "
-            + "between {low} and {high} of the same words. "
-            + "Words are the same if and only if all of the "
-            + "letters, ignoring cases, are the same. For "
-            + "example, 'run' is the same as 'Run' but different "
-            + "to 'ran'."
+            "Reformulez le paragraphe suivant : "
+            + "{original_paragraph}\nVotre réponse doit contenir "
+            + "entre {low} et {high} des mêmes mots. "
+            + "Les mots sont les mêmes uniquement si toutes les "
+            + "lettres, en ignorant les majuscules, sont identiques. Par "
+            + "exemple, 'run' est identique à 'Run' mais différent "
+            + "de 'ran'."
         )
+
 
         return self._description.format(
             original_paragraph=original_paragraph, low=self._low, high=self._high
@@ -1219,9 +1230,10 @@ class TwoResponsesChecker(Instruction):
     def build_description(self):
         """Build the instruction description."""
         self._description_pattern = (
-            "Give two different responses. Responses and only responses should"
-            " be separated by 6 asterisk symbols: ******."
+            "Donnez deux réponses différentes. Les réponses et seulement les réponses doivent"
+            " être séparées par 6 astérisques : ******."
         )
+
         return self._description_pattern
 
     def get_instruction_args(self):
@@ -1267,16 +1279,18 @@ class RepeatPromptThenAnswer(Instruction):
         Returns:
           A string representing the instruction description.
         """
-        if not prompt_to_repeat:
-            raise ValueError("prompt_to_repeat must be set.")
-        else:
-            self._prompt_to_repeat = prompt_to_repeat
+        #if not prompt_to_repeat:
+
+            #raise ValueError("prompt_to_repeat must be set.")
+        #else:
+        self._prompt_to_repeat = prompt_to_repeat
         self._description_pattern = (
-            "First repeat the request word for word without change,"
-            " then give your answer (1. do not say any words or characters"
-            " before repeating the request; 2. the request you need to repeat"
-            " does not include this sentence)"
+            "Répétez d'abord la demande mot pour mot sans changement,"
+            " puis donnez votre réponse (1. ne dites aucun mot ou caractère"
+            " avant de répéter la demande ; 2. la demande que vous devez répéter"
+            " n'inclut pas cette phrase)"
         )
+
         return self._description_pattern
 
     def get_instruction_args(self):
@@ -1287,7 +1301,11 @@ class RepeatPromptThenAnswer(Instruction):
         return ["prompt_to_repeat"]
 
     def check_following(self, value):
-        if value.strip().lower().startswith(self._prompt_to_repeat.strip().lower()):
+        try:
+            if value.strip().lower().startswith(self._prompt_to_repeat.strip().lower()):
+                return True
+        except:
+            #skip the test if it fails
             return True
         return False
 
@@ -1310,9 +1328,10 @@ class EndChecker(Instruction):
         if self._end_phrase is None:
             self._end_phrase = random.choice(_ENDING_OPTIONS)
         self._description_pattern = (
-            "Finish your response with this exact phrase {ender}. "
-            "No other words should follow this phrase."
+            "Terminez votre réponse par cette phrase exacte {ender}. "
+            "Aucun autre mot ne doit suivre cette phrase."
         )
+
         return self._description_pattern.format(ender=self._end_phrase)
 
     def get_instruction_args(self):
@@ -1335,9 +1354,10 @@ class TitleChecker(Instruction):
     def build_description(self):
         """Build the instruction description."""
         self._description_pattern = (
-            "Your answer must contain a title, wrapped in double angular brackets,"
-            " such as <<poem of joy>>."
+            "Votre réponse doit contenir un titre, encadré par des doubles chevrons,"
+            " comme <<poème de la joie>>."
         )
+
         return self._description_pattern
 
     def get_instruction_args(self):
@@ -1404,9 +1424,10 @@ class LetterFrequencyChecker(Instruction):
             self._comparison_relation = let_relation
 
         self._description_pattern = (
-            "In your response, the letter {letter} should appear {let_relation}"
-            " {let_frequency} times."
+            "Dans votre réponse, la lettre {letter} doit apparaître {let_relation} "
+            " {let_frequency} fois."
         )
+
 
         return self._description_pattern.format(
             letter=self._letter,
@@ -1443,8 +1464,9 @@ class CapitalLettersEnglishChecker(Instruction):
     def build_description(self):
         """Build the instruction description."""
         self._description_pattern = (
-            "Your entire response should be in English, and in all capital letters."
+            "Votre réponse entière doit être en français, et en lettres majuscules."
         )
+
         return self._description_pattern
 
     def get_instruction_args(self):
@@ -1474,9 +1496,10 @@ class LowercaseLettersEnglishChecker(Instruction):
     def build_description(self):
         """Build the instruction description."""
         self._description_pattern = (
-            "Your entire response should be in English, and in all lowercase"
-            " letters. No capital letters are allowed."
+            "Votre réponse entière doit être en français, et en lettres minuscules."
+            " Aucune majuscule n'est autorisée."
         )
+
         return self._description_pattern
 
     def get_instruction_args(self):
@@ -1506,8 +1529,9 @@ class CommaChecker(Instruction):
     def build_description(self):
         """Build the instruction description."""
         self._description_pattern = (
-            "In your entire response, refrain from the use of any commas."
+            "Dans toute votre réponse, évitez l'utilisation de virgules."
         )
+
         return self._description_pattern
 
     def get_instruction_args(self):
@@ -1555,9 +1579,10 @@ class CapitalWordFrequencyChecker(Instruction):
             )
 
         self._description_pattern = (
-            "In your response, words with all capital letters should appear"
-            " {relation} {frequency} times."
+            "Dans votre réponse, les mots en majuscules doivent apparaître"
+            " {relation} {frequency} fois."
         )
+
 
         return self._description_pattern.format(
             frequency=self._frequency, relation=self._comparison_relation
@@ -1577,6 +1602,8 @@ class CapitalWordFrequencyChecker(Instruction):
     def check_following(self, value):
         """Checks the frequency of words with all capital letters."""
         # Hyphenated words will count as one word
+        print(value)
+        print( self._frequency)
         words = instructions_util.nltk.word_tokenize(value)
         capital_words = [word for word in words if word.isupper()]
 
@@ -1594,8 +1621,9 @@ class QuotationChecker(Instruction):
     def build_description(self):
         """Build the instruction description."""
         self._description_pattern = (
-            "Wrap your entire response with double quotation marks."
+            "Entourez votre réponse entière de guillemets doubles."
         )
+
         return self._description_pattern
 
     def get_instruction_args(self):

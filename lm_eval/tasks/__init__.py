@@ -307,6 +307,7 @@ class TaskManager:
                 name_or_config
             ):
                 task_config = self._get_config(name_or_config)
+                print(name_or_config)
                 return _load_task(task_config, task=name_or_config)
             else:
                 subtask_list = self._get_tasklist(name_or_config)
@@ -612,7 +613,6 @@ def get_task_dict(
     if len(string_task_name_list) > 0:
         if task_manager is None:
             task_manager = TaskManager()
-
         task_name_from_string_dict = task_manager.load_task_or_group(
             string_task_name_list
         )

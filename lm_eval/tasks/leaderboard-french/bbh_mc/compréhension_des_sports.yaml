@@ -1,0 +1,19 @@
+dataset_name: compréhension_des_sports
+description: 'Déterminez si une phrase artificiellement construite en rapport avec
+  le sport est plausible ou Non.
+
+        '
+doc_to_choice: ["Oui", "Non"]
+fewshot_config:
+  sampler: first_n
+  samples:
+  - input: La phrase suivante est-elle plausible ? "Bam Adebayo a marqué un layup inversé
+      lors de la finale de la Conférence Ouest."
+    target: 'Oui'
+  - input: La phrase suivante est-elle plausible ? "Santi Cazorla a marqué un touchdown."
+    target: 'Non'
+  - input: La phrase suivante est-elle plausible ? "DeMar DeRozan a été sanctionné
+      pour goaltending."
+    target: 'Oui'
+include: _fewshot_template_yaml
+task: leaderboard_bbh_compréhension_des_sports

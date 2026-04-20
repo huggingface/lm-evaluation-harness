@@ -1,0 +1,36 @@
+dataset_name: hyperbate
+description: >
+  Ordonnez correctement les adjectifs dans des phrases en anglais.
+doc_to_choice: ["(A)", "(B)"]
+fewshot_config:
+  sampler: first_n
+  samples:
+    - input: |
+        Quelle phrase a le bon ordre des adjectifs :
+
+        Options :
+
+        (A) bateau en caoutchouc terrible
+
+        (B) terrible bateau en caoutchouc
+      target: (B)
+    - input: |
+        Quelle phrase a le bon ordre des adjectifs :
+
+        Options :
+
+        (A) petit bateau d'exercice brésilien répugnant
+
+        (B) brésilien répugnant bateau d'exercice petit
+      target: (A)
+    - input: |
+        Quelle phrase a le bon ordre des adjectifs :
+
+        Options :
+
+        (A) chaussure carrée merveilleuse bleu or
+
+        (B) merveilleuse chaussure carrée bleu or
+      target: (B)
+include: _fewshot_template_yaml
+task: leaderboard_bbh_hyperbate

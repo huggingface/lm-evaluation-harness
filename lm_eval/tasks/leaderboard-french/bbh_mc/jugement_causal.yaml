@@ -1,0 +1,65 @@
+dataset_name: jugement_causal
+description: "Répondez aux questions sur l'attribution causale."
+doc_to_choice: ["Oui", "Non"]
+fewshot_config:
+  sampler: first_n
+  samples:
+    - input: |
+        Comment une personne typique répondrait-elle à chacune des questions suivantes sur la causalité ?
+
+        Frank T. avait un conflit de longue date avec son voisin à propos d'un morceau
+        de terrain et un jour, il a décidé de tirer sur son voisin dans le corps.
+        Frank T. n'avait aucune expérience avec les armes à feu, sa main a glissé sur
+        le canon de l'arme, et le tir est parti dans une direction imprévue.
+        Néanmoins, la balle a ricoché sur un gros rocher à plusieurs mètres de là et
+        a touché le corps du voisin, causant des blessures importantes. Frank T. a-t-il
+        intentionnellement tiré sur son voisin dans le corps ?
+
+        Options :
+
+        - Oui
+
+        - Non
+      target: 'Non'
+    - input: |
+        Comment une personne typique répondrait-elle à chacune des questions suivantes sur la causalité ?
+
+        Suzy et Billy travaillent sur un projet très important pour la sécurité de notre
+        nation. Leur patron leur dit à tous les deux : "Assurez-vous d'être ici
+        exactement à 9h00. Il est absolument essentiel que vous arriviez à cette heure."
+        Billy et Suzy arrivent tous les deux à 9h00. Il se trouve qu'un détecteur de
+        mouvement avait été installé dans la pièce où ils sont arrivés. Le détecteur de
+        mouvement était configuré pour se déclencher si au moins une personne apparaissait
+        dans la pièce en même temps. Le détecteur de mouvement s'est donc déclenché.
+        Billy a-t-il causé le déclenchement du détecteur de mouvement ?
+
+        Options :
+
+        - Oui
+
+        - Non
+      target: 'Oui'
+    - input: |
+        Comment une personne typique répondrait-elle à chacune des questions suivantes sur la causalité ?
+
+        George et sa sœur Lena se retrouvent chez leurs parents pour Thanksgiving.
+        Tandis que George vient d'entrer en faculté de médecine, Lena est mécontente
+        de son mariage et a récemment perdu son emploi. Au cours de la journée, George
+        et Lena se disputent à plusieurs reprises. Plus tard dans l'après-midi, ils
+        jouent à un jeu de fléchettes. Ils se partagent les deux premiers matchs, et
+        le troisième est serré jusqu'à la fin. Le gagnant sera déterminé par le dernier
+        tir de George. S'il vise une zone de points élevés, il gagne ; s'il vise une
+        zone de points faibles, Lena gagne. George pense au moment difficile que Lena
+        traverse et il veut vraiment la laisser gagner. Il vise la zone de points
+        faibles. Il prépare son tir, et la fléchette atterrit dans la zone de points
+        faibles. Après son tir, Lena gagne le jeu et est très heureuse. George a-t-il
+        intentionnellement visé la zone de points faibles ?
+
+        Options :
+
+        - Oui
+
+        - Non
+      target: 'Oui'
+include: _fewshot_template_yaml
+task: leaderboard_bbh_jugement_causal

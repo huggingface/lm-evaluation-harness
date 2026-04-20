@@ -1,0 +1,51 @@
+dataset_name: désambiguïsation_qa
+description: >
+  Clarifiez le sens des phrases avec des pronoms ambigus.
+doc_to_choice: ["(A)", "(B)", "(C)"]
+fewshot_config:
+  sampler: first_n
+  samples:
+    - input: |
+        Dans les phrases suivantes, expliquez l'antécédent du pronom (à quoi le pronom
+        fait référence), ou indiquez que c'est ambigu.
+
+        Phrase : Le chef a dit au conseiller qu'ils ont pris un jour de congé.
+
+        Options :
+
+        (A) Le chef a pris un jour de congé
+
+        (B) Le conseiller a pris un jour de congé
+
+        (C) Ambigu
+      target: (A)
+    - input: |
+        Dans les phrases suivantes, expliquez l'antécédent du pronom (à quoi le pronom
+        fait référence), ou indiquez que c'est ambigu.
+
+        Phrase : Le manager a envoyé un message au secrétaire, mais il n'a pas encore répondu.
+
+        Options :
+
+        (A) Le secrétaire n'a pas encore répondu
+
+        (B) Le manager n'a pas encore répondu
+
+        (C) Ambigu
+      target: (A)
+    - input: |
+        Dans les phrases suivantes, expliquez l'antécédent du pronom (à quoi le pronom
+        fait référence), ou indiquez que c'est ambigu.
+
+        Phrase : Bailey prévoit de rencontrer le directeur dans son bureau.
+
+        Options :
+
+        (A) Ce sera le bureau de Bailey
+
+        (B) Ce sera le bureau du directeur
+
+        (C) Ambigu
+      target: (C)
+include: _fewshot_template_yaml
+task: leaderboard_bbh_désambiguïsation_qa

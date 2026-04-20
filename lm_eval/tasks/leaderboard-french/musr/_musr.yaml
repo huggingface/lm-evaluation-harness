@@ -1,0 +1,5 @@
+group: leaderboard_musr_fr
+task:
+  - leaderboard_musr_murder_mysteries_fr
+  - leaderboard_musr_object_placements_fr
+  - leaderboard_musr_team_allocation_fr

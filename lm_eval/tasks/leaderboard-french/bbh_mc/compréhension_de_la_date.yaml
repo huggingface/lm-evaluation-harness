@@ -1,0 +1,58 @@
+dataset_name: compréhension_de_la_date
+description: >
+  Déduire la date à partir du contexte.
+doc_to_choice: ["(A)", "(B)", "(C)", "(D)", "(E)", "(F)"]
+fewshot_config:
+  sampler: first_n
+  samples:
+    - input: |
+        Aujourd'hui, c'est la veille de Noël de 1937. Quelle est la date il y a 10 jours en MM/JJ/AAAA ?
+
+        Options :
+
+        (A) 14/12/2026
+
+        (B) 14/12/1950
+
+        (C) 14/12/2007
+
+        (D) 14/12/1937
+
+        (E) 14/07/1938
+
+        (F) 14/12/1988
+      target: (D)
+    - input: |
+        Demain, nous serons le 12/11/2019. Quelle est la date d'il y a un an à partir d'aujourd'hui en MM/JJ/AAAA ?
+
+        Options :
+
+        (A) 04/09/2018
+
+        (B) 11/11/2018
+
+        (C) 25/08/2018
+
+        (D) 02/11/2018
+
+        (E) 04/11/2018
+      target: (B)
+    - input: |
+        Jane et John se sont mariés le 2 janvier 1958. Aujourd'hui, c'est leur 5e anniversaire. Quelle est la date de demain en MM/JJ/AAAA ?
+
+        Options :
+
+        (A) 11/01/1961
+
+        (B) 03/01/1963
+
+        (C) 18/01/1961
+
+        (D) 14/10/1960
+
+        (E) 03/01/1982
+
+        (F) 03/12/1960
+      target: (B)
+include: _fewshot_template_yaml
+task: leaderboard_bbh_compréhension_de_la_date

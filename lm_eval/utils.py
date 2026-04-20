@@ -31,9 +31,12 @@ HIGHER_IS_BETTER_SYMBOLS = {
     False: "↓",
 }
 
-
-def hash_string(string: str) -> str:
-    return hashlib.sha256(string.encode("utf-8")).hexdigest()
+def hash_string(item):
+    # If 'item' is not a string, convert it to a JSON string:
+    if not isinstance(item, str):
+        item = json.dumps(item, sort_keys=True)
+    # Now 'item' is definitely a string, so we can hash it:
+    return hashlib.sha256(item.encode("utf-8")).hexdigest()
 
 
 def escaped_split(text, sep_char, maxsplit=-1):

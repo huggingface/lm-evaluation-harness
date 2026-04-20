@@ -1,0 +1,60 @@
+dataset_name: sophismes_formels
+description: >
+  Distinguez les arguments déductivement valides des sophismes formels.
+doc_to_choice: ["valide", "invalidee"]
+fewshot_config:
+  sampler: first_n
+  samples:
+    - input: |
+        "Il n'est pas toujours facile de voir qui est lié à qui -- et de quelle manière.
+        L'argument suivant porte sur cette question : Pour commencer, Lesley est un
+        ami proche de Fernando. De plus, être un ami proche de Fernando ou un camarade
+        de classe de Lowell est suffisant pour être arrière-grand-père de Leroy. Il
+        s'ensuit que Lesley est arrière-grand-père de Leroy."
+
+        L'argument, étant donné les prémisses explicitement énoncées, est-il déductivement
+        valide ou invalidee ?
+
+        Options :
+
+        - valide
+
+        - invalidee
+      target: valide
+    - input: |
+        "Il n'est pas toujours facile de voir qui est lié à qui -- et de quelle manière.
+        L'argument suivant porte sur cette question : Quiconque n'est pas arrière-grand-père
+        de Clyde est le demi-frère de Brian. Être un ancêtre de Dana est suffisant
+        pour ne pas être arrière-grand-père de Clyde. Nous pouvons conclure : Tout
+        le monde qui est un ancêtre de Dana est aussi le demi-frère de Brian."
+
+        L'argument, étant donné les prémisses explicitement énoncées, est-il déductivement
+        valide ou invalidee ?
+
+        Options :
+
+        - valide
+
+        - invalidee
+      target: valide
+    - input: |
+        "Il n'est pas toujours facile de comprendre qui consomme quels produits.
+        L'argument suivant porte sur cette question : Tout utilisateur peu fréquent
+        de shampoing Paul Mitchell est soit un consommateur rare de shampoing Nioxin,
+        soit un acheteur fidèle de savon Caress, ou les deux. Aucun consommateur régulier
+        de savon Lush n'est un consommateur rare de shampoing Nioxin et, en même temps,
+        un acheteur fidèle de savon Caress. Il s'ensuit que quiconque est un utilisateur
+        peu fréquent de shampoing Paul Mitchell n'est pas un consommateur régulier
+        de savon Lush."
+
+        L'argument, étant donné les prémisses explicitement énoncées, est-il déductivement
+        valide ou invalidee ?
+
+        Options :
+
+        - valide
+
+        - invalidee
+      target: invalidee
+include: _fewshot_template_yaml
+task: leaderboard_bbh_sophismes_formels

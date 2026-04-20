@@ -1,0 +1,21 @@
+dataset_name: comptage_d_objets
+description: >
+  Questions qui impliquent d'énumérer des objets et de demander au modèle de les compter.
+doc_to_choice: ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18"]
+fewshot_config:
+  sampler: first_n
+  samples:
+    - input: |
+        J'ai une mûre, une clarinette, une nectarine, une prune, une fraise, une banane,
+        une flûte, une orange et un violon. Combien de fruits ai-je ?
+      target: '6'
+    - input: |
+        J'ai une orange, une framboise, deux pêches, une mûre, une pomme, un raisin,
+        une nectarine et trois prunes. Combien de fruits ai-je ?
+      target: '11'
+    - input: |
+        J'ai une tête de laitue, une tête de brocoli, un oignon, une branche de céleri,
+        deux carottes, une gousse d'ail et une patate douce. Combien de légumes ai-je ?
+      target: '8'
+include: _fewshot_template_yaml
+task: leaderboard_bbh_comptage_d_objets

@@ -1,0 +1,24 @@
+group: leaderboard_bbh_fr
+task:
+  - leaderboard_bbh_expressions_booléennes
+  - leaderboard_bbh_jugement_causal
+  - leaderboard_bbh_compréhension_de_la_date
+  - leaderboard_bbh_désambiguïsation_qa
+  - leaderboard_bbh_sophismes_formels
+  - leaderboard_bbh_formes_géométriques
+  - leaderboard_bbh_hyperbate
+  - leaderboard_bbh_déduction_logique_cinq_objets
+  - leaderboard_bbh_déduction_logique_sept_objets
+  - leaderboard_bbh_déduction_logique_trois_objets
+  - leaderboard_bbh_recommandation_de_film
+  - leaderboard_bbh_naviguer
+  - leaderboard_bbh_comptage_d_objets
+  - leaderboard_bbh_pingouins_sur_une_table
+  - leaderboard_bbh_raisonnement_sur_les_objets_colorés
+  - leaderboard_bbh_sarcasmes
+  - leaderboard_bbh_compréhension_des_sports
+  - leaderboard_bbh_séquences_temporelles
+  - leaderboard_bbh_suivi_objets_mélangés_cinq_objets
+  - leaderboard_bbh_suivi_objets_mélangés_sept_objets
+  - leaderboard_bbh_suivi_objets_mélangés_trois_objets
+  - leaderboard_bbh_toile_de_mensonges

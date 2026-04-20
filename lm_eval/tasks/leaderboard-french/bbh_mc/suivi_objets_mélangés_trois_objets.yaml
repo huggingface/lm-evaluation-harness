@@ -1,0 +1,48 @@
+dataset_name: suivi_objets_mélangés_trois_objets
+description: >
+  Une tâche qui nécessite de déterminer les positions finales d'un ensemble d'objets, étant donné leurs positions initiales et une description d'une séquence d'échanges.
+doc_to_choice: ["(A)", "(B)", "(C)"]
+fewshot_config:
+  sampler: first_n
+  samples:
+    - input: |
+        Alice, Bob et Claire jouent à un jeu. Au début du jeu, ils tiennent chacun une balle : Alice a une balle jaune, Bob a une balle bleue et Claire a une balle rose.
+
+        Au fur et à mesure que le jeu progresse, des paires de joueurs échangent leurs balles. D'abord, Claire et Alice échangent leurs balles. Ensuite, Alice et Bob échangent leurs balles. Enfin, Claire et Bob échangent leurs balles. À la fin du jeu, Bob a la
+
+        Options :
+
+        (A) balle jaune
+
+        (B) balle bleue
+
+        (C) balle rose
+      target: (A)
+    - input: |
+        Alice, Bob et Claire jouent à un jeu. Au début du jeu, ils tiennent chacun une balle : Alice a une balle blanche, Bob a une balle violette et Claire a une balle rose.
+
+        Au fur et à mesure que le jeu progresse, des paires de joueurs échangent leurs balles. D'abord, Bob et Alice échangent leurs balles. Ensuite, Bob et Claire échangent leurs balles. Enfin, Bob et Alice échangent leurs balles. À la fin du jeu, Alice a la
+
+        Options :
+
+        (A) balle blanche
+
+        (B) balle violette
+
+        (C) balle rose
+      target: (C)
+    - input: |
+        Alice, Bob et Claire sont des danseurs à une danse carrée. Au début d'une chanson, ils ont chacun un partenaire : Alice danse avec Lola, Bob danse avec Rodrigo, et Claire danse avec Patrick.
+
+        Pendant la chanson, les danseurs changent souvent de partenaires. D'abord, Alice et Bob échangent leurs partenaires. Ensuite, Claire et Bob échangent leurs partenaires. Enfin, Bob et Alice échangent leurs partenaires. À la fin de la danse, Alice danse avec
+
+        Options :
+
+        (A) Lola
+
+        (B) Rodrigo
+
+        (C) Patrick
+      target: (C)
+include: _fewshot_template_yaml
+task: leaderboard_bbh_suivi_objets_mélangés_trois_objets

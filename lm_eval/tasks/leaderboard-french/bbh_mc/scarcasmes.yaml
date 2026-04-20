@@ -1,0 +1,40 @@
+dataset_name: sarcasmes
+description: >
+  Déterminez laquelle des deux phrases est sarcastique. Selon le dictionnaire de l'Université de Cambridge, 
+  le sarcasme est "l'utilisation de remarques qui signifient clairement le contraire de ce qu'elles disent, 
+  faites pour blesser les sentiments de quelqu'un ou pour critiquer quelque chose de manière humoristique." 
+  Les phrases sarcastiques contiennent souvent des énonciations satiriques ou ironiques, 
+  des hyperboles, des remarques ambivalentes ou spirituelles.
+doc_to_choice: ["(A)", "(B)"]
+fewshot_config:
+  sampler: first_n
+  samples:
+    - input: |
+        Quelle déclaration est sarcastique ?
+
+        Options :
+
+        (A) Oui, parce que s'intéresser à des sujets et faire des recherches actives est une énorme perte de temps
+
+        (B) Oui, parce que s'intéresser à des sujets et faire des recherches actives est une grande affaire
+      target: (A)
+    - input: |
+        Quelle déclaration est sarcastique ?
+
+        Options :
+
+        (A) Personne ne va être en désaccord avec vous là-dessus. Éviter les attaques ad hominem aide vraiment votre cause
+
+        (B) Personne ne va être en désaccord avec vous là-dessus. Les attaques ad hominem aident vraiment votre cause
+      target: (B)
+    - input: |
+        Quelle déclaration est sarcastique ?
+
+        Options :
+
+        (A) Cohérence dans les sanctions de la ligue ? Qu'est-ce que vous pensez que cela doit être, de la politique ?
+
+        (B) Cohérence dans les sanctions de la ligue ? Qu'est-ce que vous pensez que cela doit être, de la morale ?
+      target: (A)
+include: _fewshot_template_yaml
+task: leaderboard_bbh_sarcasmes

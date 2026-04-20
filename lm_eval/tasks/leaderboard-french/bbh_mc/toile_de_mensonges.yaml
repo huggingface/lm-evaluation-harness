@@ -1,0 +1,23 @@
+dataset_name: toile_de_mensonges
+description: >
+  Évaluez une fonction booléenne aléatoire exprimée sous forme de problème de mots.
+doc_to_choice: ["Oui", "Non"]
+fewshot_config:
+  sampler: first_n
+  samples:
+    - input: |
+        Question : Fidel dit la vérité. Jerry dit que Fidel dit la vérité. Vina
+        dit que Jerry dit la vérité. Millicent dit que Vina ment. Raymond dit que Millicent
+        ment. Raymond dit-il la vérité ?
+      target: 'Oui'
+    - input: |
+        Question : Kristian ment. Millie dit que Kristian ment. Maybelle dit que Millie
+        dit la vérité. Fidel dit que Maybelle ment. Leda dit que Fidel ment. Leda dit-elle la vérité ?
+      target: 'Oui'
+    - input: |
+        Question : Kristian dit la vérité. Michaela dit que Kristian ment. Raymond
+        dit que Michaela dit la vérité. Osvaldo dit que Raymond dit la vérité. Jamey dit
+        qu'Osvaldo dit la vérité. Jamey dit-il la vérité ?
+      target: 'Non'
+include: _fewshot_template_yaml
+task: leaderboard_bbh_toile_de_mensonges

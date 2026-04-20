@@ -1,0 +1,100 @@
+dataset_name: séquences_temporelles
+description: >
+  Description de la tâche : Répondez aux questions sur les moments où certains événements ont pu se produire.
+doc_to_choice: ["(A)", "(B)", "(C)", "(D)"]
+fewshot_config:
+  sampler: first_n
+  samples:
+    - input: |
+        Aujourd'hui, Emily est allée au musée. Entre quelles heures aurait-elle pu y aller ?
+
+        Nous savons que :
+
+        Emily s'est réveillée à 13h.
+
+        Elizabeth a vu Emily lire à la bibliothèque de 14h à 16h.
+
+        Jessica a vu Emily regarder un film au cinéma de 16h à 17h.
+
+        Leslie a vu Emily attendre à l'aéroport de 17h à 18h.
+
+        William a vu Emily acheter des vêtements au centre commercial de 18h à 19h.
+
+        Le musée était fermé après 19h.
+
+        Entre quelles heures Emily aurait-elle pu aller au musée ?
+
+        Options :
+
+        (A) 13h à 14h
+
+        (B) 18h à 19h
+
+        (C) 17h à 18h
+
+        (D) 14h à 16h
+      target: (A)
+    - input: |
+        Aujourd'hui, Elizabeth est allée au parc d'attractions. Entre quelles heures aurait-elle pu y aller ?
+
+        Nous savons que :
+
+        Elizabeth s'est réveillée à 7h.
+
+        David a vu Elizabeth réparer son ordinateur au magasin d'électronique de 13h à 14h.
+
+        Sarah a vu Elizabeth jouer au tennis sur le court de tennis de 14h à 15h.
+
+        Susan a vu Elizabeth marcher vers la Statue de la Liberté de 15h à 18h.
+
+        Andrew a vu Elizabeth prendre des photos près de la tour Eiffel de 18h à 21h.
+
+        Emily a vu Elizabeth prendre un café au café de 21h à 22h.
+
+        Le parc d'attractions était fermé après 22h.
+
+        Entre quelles heures Elizabeth aurait-elle pu aller au parc d'attractions ?
+
+        Options :
+
+        (A) 7h à 13h
+
+        (B) 21h à 22h
+
+        (C) 13h à 14h
+
+        (D) 15h à 18h
+      target: (A)
+    - input: |
+        Aujourd'hui, Tiffany est allée à la plage. Entre quelles heures aurait-elle pu y aller ?
+
+        Nous savons que :
+
+        Tiffany s'est réveillée à 5h.
+
+        Betty a vu Tiffany prendre un café au café de 5h à 6h.
+
+        Jessica a vu Tiffany travailler au bureau de 6h à 9h.
+
+        John a vu Tiffany s'étirer au studio de yoga de 9h à 12h.
+
+        Sean a vu Tiffany s'asseoir sur un toit de 12h à 14h.
+
+        Sarah a vu Tiffany jouer au tennis sur le court de tennis de 14h à 15h.
+
+        La plage était fermée après 16h.
+
+        Entre quelles heures Tiffany aurait-elle pu aller à la plage ?
+
+        Options :
+
+        (A) 9h à 12h
+
+        (B) 12h à 14h
+
+        (C) 5h à 6h
+
+        (D) 15h à 16h
+      target: (D)
+include: _fewshot_template_yaml
+task: leaderboard_bbh_séquences_temporelles
